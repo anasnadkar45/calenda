@@ -45,6 +45,23 @@ export function SubmitButton({ text, variant, className }: iAppProps) {
         </>
     );
 }
+export function GoogleAuthButton() {
+    const { pending } = useFormStatus();
+    return (
+        <>
+            {pending ? (
+                <Button variant="outline" className="w-full" disabled>
+                    <Loader2 className="size-4 mr-2 animate-spin" /> Please wait
+                </Button>
+            ) : (
+                <Button variant="outline" className="w-full space-x-4 bg-transparent">
+                    <BsGoogle />
+                    <span>Sign in with Google</span>
+                </Button>
+            )}
+        </>
+    );
+}
 
 export function GitHubAuthButton() {
     const { pending } = useFormStatus();
@@ -55,27 +72,9 @@ export function GitHubAuthButton() {
                     <Loader2 className="size-4 mr-2 animate-spin" /> Please wait
                 </Button>
             ) : (
-                <Button variant="outline" className="w-full space-x-4">
+                <Button variant="outline" className="w-full space-x-4 bg-card">
                     <FaGithub />
                     <span>Sign in with GitHub</span>
-                </Button>
-            )}
-        </>
-    );
-}
-
-export function GoogleAuthButton() {
-    const { pending } = useFormStatus();
-    return (
-        <>
-            {pending ? (
-                <Button variant="outline" className="w-full" disabled>
-                    <Loader2 className="size-4 mr-2 animate-spin" /> Please wait
-                </Button>
-            ) : (
-                <Button variant="outline" className="w-full space-x-4">
-                    <BsGoogle />
-                    <span>Sign in with Google</span>
                 </Button>
             )}
         </>

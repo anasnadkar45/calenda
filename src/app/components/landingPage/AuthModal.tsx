@@ -14,7 +14,7 @@ export const AuthModal = () => {
           Try for Free
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[400px] p-0 flex flex-col gap-0 overflow-hidden bg-gradient-to-br from-card to-secondary/50 border border-primary/50 shadow-2xl shadow-primary/20">
+      <DialogContent className="sm:max-w-[400px] p-0 flex flex-col gap-0 overflow-hidden bg-gradient-to-br from-background to-card dark:to-black border border-primary/50 shadow-2xl shadow-primary/20">
         <div className="p-8 relative">
           <div className="absolute inset-0 bg-primary/5 backdrop-blur-3xl z-0"></div>
           <DialogHeader className="flex-row justify-center items-center gap-x-3 mb-8 relative z-10">
@@ -22,8 +22,8 @@ export const AuthModal = () => {
               <div className="absolute inset-0 bg-primary/30 blur-xl rounded-full animate-pulse"></div>
               <Image src={Logo} className="size-14 relative z-10 animate-float" alt="Logo" />
             </div>
-            <h4 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-500">
-              Cal<span className="text-primary">Marshal</span>
+            <h4 className="text-4xl font-bold text-cyan-700 dark:text-cyan-400">
+              Cal<span className="text-primary">enda</span>
             </h4>
           </DialogHeader>
           <div className="flex flex-col gap-4 mt-8 relative z-10">
