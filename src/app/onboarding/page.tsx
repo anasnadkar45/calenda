@@ -4,8 +4,27 @@ import { motion } from 'framer-motion'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { SubmitButton } from '../components/SubmitButton'
+import { useFormState } from 'react-dom'
+import { OnboardingAction } from '../actions'
+import { useForm } from '@conform-to/react'
+import { parseWithZod } from '@conform-to/zod'
+import { onboardingSchema } from '../lib/zodSchemas'
 
 const OnboardingPage = () => {
+    const [lastResult, action] = useFormState(OnboardingAction, undefined);
+
+    const [form, fields] = useForm({
+        lastResult,
+
+        onValidate({ formData }) {
+            return parseWithZod(formData, {
+                schema: onboardingSchema
+            })
+        },
+
+        shouldValidate: 'onBlur',
+        shouldRevalidate: 'onInput'
+    })
 
     return (
         <div className="h-screen w-screen flex items-center justify-center">
@@ -25,29 +44,42 @@ const OnboardingPage = () => {
                         <p className='text-slate-400'>We need the following information to set up your profile!</p>
                     </div>
 
-                    <form className="flex flex-col gap-y-5">
+                    <form
+                        className="flex flex-col gap-y-5"
+                        id={form.id}
+                        onSubmit={form.onSubmit}
+                        action={action}
+                        noValidate
+                    >
                         {/* Full Name Input */}
-                        <div className='grid gap-y-2'>
+                        <div className='flex flex-col gap-y-2'>
                             <Label>Full Name</Label>
                             <Input
-                                type="text"
+                                name={fields.fullName.name}
+                                defaultValue={fields.fullName.initialValue}
+                                key={fields.fullName.key}
                                 placeholder="Anas Nadkar"
-                                className="w-full px-4 py-2 text-gray-800 bg-white" />
+                                className="w-full px-4 py-2 text-gray-800 bg-white"
+                            />
+                            <p className='text-red-500 text-sm'>{fields.fullName.errors}</p>
                         </div>
 
                         {/* Username Input */}
-                        <div className='grid gap-y-2 q'>
+                        <div className='flex flex-col gap-y-2 q'>
                             <Label>Username</Label>
                             <div className="flex rounded-md bg-muted">
                                 <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-muted text-muted-foreground text-sm">
                                     Calenda.com/
                                 </span>
                                 <Input
-                                    type="text"
+                                    name={fields.userName.name}
+                                    defaultValue={fields.userName.initialValue}
+                                    key={fields.userName.key}
                                     placeholder="test-user-12"
                                     className="w-full px-4 py-2 text-gray-800 bg-white"
                                 />
                             </div>
+                            <p className='text-red-500 text-sm'>{fields.userName.errors}</p>
                         </div>
 
                         {/* Submit Button */}

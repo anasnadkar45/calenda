@@ -19,13 +19,30 @@ import { Toaster } from "@/components/ui/sonner";
 import { auth, signOut } from "../lib/auth";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { Sidebar } from "../components/dashboard/Sidebar";
+import prisma from "../lib/db";
+import { requireUser } from "../lib/hooks";
+
+async function getData(userId: string){
+    const data = await prisma.user.findUnique({
+        where:{
+            id: userId,
+        },
+
+        select:{
+            userName: true
+        },
+    });
+
+    if(!data?.userName){
+        return redirect('/onboarding');
+    };
+
+    return data;
+}
 
 export default async function Dashboard({ children }: { children: ReactNode }) {
-    const session = await auth();
-
-    if (!session?.user) {
-        return redirect("/");
-    }
+    const session = await requireUser();
+    const data = await getData(session.user?.id as string);
 
     return (
         <>
@@ -66,7 +83,7 @@ export default async function Dashboard({ children }: { children: ReactNode }) {
                                         className="rounded-full"
                                     >
                                         <Image
-                                            src={session.user.image as string}
+                                            src={session.user?.image as string}
                                             alt="Profile"
                                             width={20}
                                             height={20}
