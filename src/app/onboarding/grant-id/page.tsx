@@ -12,7 +12,7 @@ const page = () => {
                 <p className='text-slate-400'>We need to now connect your calender to your account.</p>
             </div>
             <Button asChild>
-                <Link href='/'>
+                <Link href='/api/auth'>
                     <CalendarCheck2 className='size-5 mr-2'/>
                     Connect Calendar to your Account
                 </Link>
